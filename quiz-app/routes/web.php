@@ -16,3 +16,6 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     return view('welcome');
 });
+
+Route::get('/quiz/{id?}', 'QuizController@form')->name('quiz.form');
+Route::post('/quiz/{id?}', 'QuizController@storeOrUpdate')->name('quiz.storeOrUpdate');
