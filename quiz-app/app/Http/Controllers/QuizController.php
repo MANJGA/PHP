@@ -41,4 +41,25 @@ class QuizController extends Controller
 
         return redirect()->route('quiz.form', ['id' => $quiz->id])->with('success', 'Quiz saved successfully!');
     }
+
+
+    public function index()
+    {
+        $quizzes = Quiz::where('status', 1)
+                       ->whereNotNull('photo')
+                       ->orderBy('created_at', 'desc')
+                       ->take(8)
+                       ->get();
+    
+        if ($quizzes->count() < 8) {
+            $additionalQuizzes = Quiz::where('status', 1)
+                                     ->whereNotNull('description')
+                                     ->whereNull('photo')
+                                     ->take(8 - $quizzes->count())
+                                     ->get();
+            $quizzes = $quizzes->merge($additionalQuizzes);
+        }
+    
+        return view('welcome', ['quizzes' => $quizzes]);
+    }
 }
