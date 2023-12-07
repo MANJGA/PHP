@@ -1,23 +1,20 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\QuizController;
 
-/*
-|--------------------------------------------------------------------------
-| Web Routes
-|--------------------------------------------------------------------------
-|
-| Here is where you can register web routes for your application. These
-| routes are loaded by the RouteServiceProvider within a group which
-| contains the "web" middleware group. Now create something great!
-|
-*/
 
-Route::get('/', function () {
-    return view('welcome');
+
+Route::get('/', [QuizController::class, 'index']);
+
+Route::get('/quiz/{id?}', [QuizController::class, 'form'])
+     ->name('quiz.form')
+     ->middleware('checkname');
+
+Route::post('/quiz/{id?}', [QuizController::class, 'storeOrUpdate'])
+     ->name('quiz.storeOrUpdate')
+     ->middleware('checkname');
+
+Route::get('/error', function () {
+    return response()->view('error', [], 404);
 });
-
-Route::get('/quiz/{id?}', 'QuizController@form')->name('quiz.form');
-Route::post('/quiz/{id?}', 'QuizController@storeOrUpdate')->name('quiz.storeOrUpdate');
-Route::get('/', 'QuizController@index');
-
