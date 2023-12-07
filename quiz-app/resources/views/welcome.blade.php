@@ -35,6 +35,16 @@
                     @endauth
                 </div>
             @endif
+            
+            @foreach ($quizzes as $quiz)
+    <div>
+        <h2>{{ $quiz->title }}</h2>
+        @if ($quiz->photo)
+            <img src="{{ $quiz->photo }}" alt="Photo of {{ $quiz->title }}">
+        @endif
+        <p>{{ $quiz->description }}</p>
+    </div>
+        @endforeach
 
             <div class="max-w-6xl mx-auto sm:px-6 lg:px-8">
                 <div class="flex justify-center pt-8 sm:justify-start sm:pt-0">
